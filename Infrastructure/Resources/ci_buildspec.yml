@@ -5,11 +5,6 @@ phases:
     runtime-versions:
       docker: 18
 
-  pre_build:
-    commands:
-      - export GIT_REV=`git rev-parse --short HEAD`
-      - echo Using $GIT_REV
-
   build:
     commands:
       - echo Build started on `date`

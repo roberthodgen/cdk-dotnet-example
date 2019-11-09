@@ -36,6 +36,7 @@ namespace Infrastructure
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
+                        Privileged = true,
                     },
                 });
 
@@ -48,6 +49,7 @@ namespace Infrastructure
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
+                        Privileged = true,
                     },
                 });
 
@@ -57,7 +59,7 @@ namespace Infrastructure
 
             new Pipeline(
                 this,
-                "Pipeline",
+                "Sample",
                 new PipelineProps
                 {
                     Stages = new IStageProps[]

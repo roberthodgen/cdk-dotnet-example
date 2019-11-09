@@ -12,28 +12,28 @@ namespace Infrastructure
         {
             var ingressSubnet = new SubnetConfiguration
             {
-                SubnetType = SubnetType.PUBLIC,
                 Name = "Ingress",
+                SubnetType = SubnetType.PUBLIC,
                 CidrMask = 24,
             };
 
             var applicationSubnet = new SubnetConfiguration
             {
-                SubnetType = SubnetType.PRIVATE,
                 Name = "Application",
+                SubnetType = SubnetType.PRIVATE,
                 CidrMask = 24,
             };
 
             var databaseSubnet = new SubnetConfiguration
             {
-                SubnetType = SubnetType.ISOLATED,
                 Name = "Database",
+                SubnetType = SubnetType.ISOLATED,
                 CidrMask = 24,
             };
 
             Vpc = new Vpc(
                 this,
-                "Dev",
+                "Primary",
                 new VpcProps
                 {
                     Cidr = "10.1.0.0/16",
@@ -59,7 +59,8 @@ namespace Infrastructure
                 "PublicSubnetIds",
                 new CfnOutputProps
                 {
-                    Value = "Public Subnet IDs: " + string.Join(", ", Vpc.PublicSubnets.Select(s => s.SubnetId)),
+                    ExportName = "PublicSubnetIds",
+                    Value = "ids:" + string.Join(",", Vpc.PublicSubnets.Select(s => s.SubnetId)),
                 });
         }
 
@@ -70,7 +71,8 @@ namespace Infrastructure
                 "PrivateSubnetIds",
                 new CfnOutputProps
                 {
-                    Value = "Private Subnet IDs: " + string.Join(", ", Vpc.PrivateSubnets.Select(s => s.SubnetId)),
+                    ExportName = "PrivateSubnetIds",
+                    Value = "ids:" + string.Join(",", Vpc.PrivateSubnets.Select(s => s.SubnetId)),
                 });
         }
 
@@ -81,7 +83,8 @@ namespace Infrastructure
                 "IsolatedSubnetIds",
                 new CfnOutputProps
                 {
-                    Value = "Isolated Subnet IDs: " + string.Join(" ,", Vpc.IsolatedSubnets.Select(s => s.SubnetId)),
+                    ExportName = "IsolatedSubnetIds",
+                    Value = "ids:" + string.Join(",", Vpc.IsolatedSubnets.Select(s => s.SubnetId)),
                 });
         }
     }

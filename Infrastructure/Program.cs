@@ -1,15 +1,12 @@
-﻿using Amazon.CDK;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
-    class Program
+    using Amazon.CDK;
+
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            var app = new App(null);
+            var app = new App(new AppProps());
             new CdkHelloWorldStack(app, "CdkHelloWorldStack", new StackProps());
             app.Synth();
         }

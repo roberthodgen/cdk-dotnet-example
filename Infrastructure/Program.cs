@@ -8,7 +8,8 @@
         {
             var app = new App(new AppProps());
             var networking = new NetworkStack(app, "Network", new StackProps());
-            new CdkHelloWorldStack(app, "CdkHelloWorldStack", new StackProps(), networking.Vpc);
+            new ApiStack(app, "Api", new StackProps(), networking.Vpc);
+            new PipelineStack(app, "Pipeline", new StackProps());
             app.Synth();
         }
     }

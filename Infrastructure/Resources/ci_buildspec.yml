@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+
+  pre_build:
+    commands:
+      - export GIT_REV=`git rev-parse --short HEAD`
+      - echo Using $GIT_REV
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building Docker image...
+      - docker build --target test .

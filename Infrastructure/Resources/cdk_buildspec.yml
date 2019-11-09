@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 2.2
+      node: 10
+    commands:
+      - npm i -g aws-cdk
+
+  pre_build:
+    commands:
+      - export GIT_REV=`git rev-parse --short HEAD`
+      - dotnet restore
+      - dotnet test -c Release
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - dotnet build -c Release
+      - cdk synth Api -o dist
+
+artifacts:
+  base-directory: dist
+  files:
+    - Api.template.json

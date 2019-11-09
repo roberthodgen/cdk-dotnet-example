@@ -15,7 +15,7 @@ namespace Infrastructure
                 "CdkBuild",
                 new PipelineProjectProps
                 {
-                    BuildSpec = BuildSpec.FromSourceFilename("Resources/cdk_buildspec.yml"),
+                    BuildSpec = BuildSpec.FromSourceFilename("Infrastructure/Resources/cdk_buildspec.yml"),
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
@@ -32,7 +32,7 @@ namespace Infrastructure
                 "ApiBuild",
                 new PipelineProjectProps
                 {
-                    BuildSpec = BuildSpec.FromSourceFilename("Resources/api_buildspec.yml"),
+                    BuildSpec = BuildSpec.FromSourceFilename("Infrastructure/Resources/api_buildspec.yml"),
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
@@ -44,7 +44,7 @@ namespace Infrastructure
                 "ApiTest",
                 new PipelineProjectProps
                 {
-                    BuildSpec = BuildSpec.FromSourceFilename("Resources/ci_buildspec.yml"),
+                    BuildSpec = BuildSpec.FromSourceFilename("Infrastructure/Resources/ci_buildspec.yml"),
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
@@ -69,7 +69,7 @@ namespace Infrastructure
                             {
                                 new GitHubSourceAction(new GitHubSourceActionProps
                                 {
-                                    ActionName = "GitHubSource",
+                                    ActionName = "GitHub",
                                     OauthToken = SecretValue.SecretsManager("github.com/roberthodgen"),
                                     Repo = "cdk-dotnet-example",
                                     Owner = "roberthodgen",

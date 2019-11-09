@@ -59,7 +59,7 @@ namespace Infrastructure
 
             new Pipeline(
                 this,
-                "Sample",
+                "Example",
                 new PipelineProps
                 {
                     Stages = new IStageProps[]

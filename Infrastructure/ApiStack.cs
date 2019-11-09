@@ -13,7 +13,7 @@ namespace Infrastructure
         {
             var cluster = new Cluster(
                 this,
-                "Cluster",
+                "Example",
                 new ClusterProps
                 {
                     Vpc = vpc,
@@ -21,7 +21,7 @@ namespace Infrastructure
 
             var logging = new AwsLogDriver(new AwsLogDriverProps
             {
-                StreamPrefix = "Api",
+                StreamPrefix = "Example",
             });
 
             var taskDef = new FargateTaskDefinition(
@@ -35,7 +35,7 @@ namespace Infrastructure
 
             var ecr = new Repository(
                 this,
-                "Api",
+                "EcrRepository",
                 new RepositoryProps
                 {
                     RepositoryName = "cdk-dotnet-example",

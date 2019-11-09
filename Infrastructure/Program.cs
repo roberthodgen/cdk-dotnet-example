@@ -7,7 +7,8 @@
         private static void Main()
         {
             var app = new App(new AppProps());
-            new CdkHelloWorldStack(app, "CdkHelloWorldStack", new StackProps());
+            var networking = new NetworkStack(app, "Network", new StackProps());
+            new CdkHelloWorldStack(app, "CdkHelloWorldStack", new StackProps(), networking.Vpc);
             app.Synth();
         }
     }

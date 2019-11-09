@@ -1,6 +1,6 @@
 using Amazon.CDK;
 
-namespace CdkHelloWorld
+namespace Infrastructure
 {
     public class CdkHelloWorldStack : Stack
     {

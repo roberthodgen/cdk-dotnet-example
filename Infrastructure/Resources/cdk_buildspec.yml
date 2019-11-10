@@ -20,5 +20,6 @@ phases:
       - cdk synth Api -o dist
 
 artifacts:
+  base-directory: dist
   files:
-    - dist/*
+    - "**/*"

@@ -12,10 +12,10 @@ phases:
       - echo Build started on `date`
       - echo Building Docker image...
       - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest .
-      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}
 
   post_build:
     commands:
       - echo Pushing Docker image to ECR...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-${CODEBUILD_RESOLVED_SOURCE_VERSION:0:8}

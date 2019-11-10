@@ -33,14 +33,6 @@ namespace Infrastructure
                     Cpu = 256,
                 });
 
-            var ecr = new Repository(
-                this,
-                "EcrRepository",
-                new RepositoryProps
-                {
-                    RepositoryName = "cdk-dotnet-example",
-                });
-
 //            var image = ContainerImage.FromEcrRepository(ecr, "latest");
 
             var image = ContainerImage.FromRegistry("nginx:latest");

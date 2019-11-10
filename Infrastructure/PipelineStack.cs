@@ -5,12 +5,21 @@ namespace Infrastructure
     using Amazon.CDK.AWS.CodeBuild;
     using Amazon.CDK.AWS.CodePipeline;
     using Amazon.CDK.AWS.CodePipeline.Actions;
+    using Amazon.CDK.AWS.ECR;
     using Amazon.CDK.AWS.IAM;
 
     public class PipelineStack : Stack
     {
         public PipelineStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
         {
+            var ecr = new Repository(
+                this,
+                "EcrRepository",
+                new RepositoryProps
+                {
+                    RepositoryName = "cdk-dotnet-example",
+                });
+
             var cdkBuild = new PipelineProject(
                 this,
                 "CdkBuild",

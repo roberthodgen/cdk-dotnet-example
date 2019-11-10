@@ -142,7 +142,7 @@ namespace Infrastructure.Stacks
                             {
                                 new CloudFormationCreateUpdateStackAction(new CloudFormationCreateUpdateStackActionProps
                                 {
-                                    ActionName = "CloudFormation",
+                                    ActionName = "ApiStack",
                                     TemplatePath = cdkBuildOutput.AtPath("Api.template.json"),
                                     StackName = "Api",
                                     AdminPermissions = true,

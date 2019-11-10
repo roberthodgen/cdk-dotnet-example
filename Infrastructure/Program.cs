@@ -19,6 +19,8 @@
                 ApiImageTag = apiImageTag,
             });
 
+            new IntegrationTestStack(app, "IntegrationTest", new StackProps());
+
             new ApiStack(app, "Api", new ApiStackProps
             {
                 Vpc = networkStack.Vpc,

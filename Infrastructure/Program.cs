@@ -14,6 +14,7 @@
             {
                 Vpc = networkStack.Vpc,
                 Repository = pipelineStack.Repository,
+                ApiImageTag = pipelineStack.ApiImageTag,
             });
             app.Synth();
         }

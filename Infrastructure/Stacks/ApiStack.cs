@@ -33,14 +33,6 @@ namespace Infrastructure.Stacks
                     Cpu = 256,
                 });
 
-            var imageTag = new CfnParameter(
-                this,
-                "ImageTag",
-                new CfnParameterProps
-                {
-                    Default = "latest",
-                });
-
             var repo = Repository.FromRepositoryName(
                 this,
                 "EcrRepository",
@@ -52,7 +44,7 @@ namespace Infrastructure.Stacks
                 new ContainerDefinitionProps
                 {
                     TaskDefinition = taskDef,
-                    Image = ContainerImage.FromEcrRepository(repo, imageTag.ValueAsString),
+                    Image = ContainerImage.FromEcrRepository(repo, props.ApiImageTag.ValueAsString),
                     Logging = logging,
                 });
 

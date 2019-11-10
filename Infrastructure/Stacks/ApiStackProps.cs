@@ -9,5 +9,7 @@ namespace Infrastructure.Stacks
         public IVpc Vpc { get; set; }
 
         public IRepository Repository { get; set; }
+
+        public CfnParameter ApiImageTag { get; set; }
     }
 }

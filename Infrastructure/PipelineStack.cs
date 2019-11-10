@@ -20,11 +20,6 @@ namespace Infrastructure
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
-                        EnvironmentVariables = new Dictionary<string, IBuildEnvironmentVariable>
-                        {
-                            ["AWS_ACCOUNT_ID"] = BuildEnvironmentVariable(Of(this).Account),
-                            ["AWS_DEFAULT_REGION"] = BuildEnvironmentVariable(Of(this).Region),
-                        },
                     },
                 });
 
@@ -51,6 +46,11 @@ namespace Infrastructure
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
                         Privileged = true,
+                        EnvironmentVariables = new Dictionary<string, IBuildEnvironmentVariable>
+                        {
+                            ["AWS_ACCOUNT_ID"] = BuildEnvironmentVariable(Of(this).Account),
+                            ["AWS_DEFAULT_REGION"] = BuildEnvironmentVariable(Of(this).Region),
+                        },
                     },
                 });
 

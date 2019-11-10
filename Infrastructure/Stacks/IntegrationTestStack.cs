@@ -27,6 +27,11 @@ namespace Infrastructure.Stacks
                                 EventAction.PULL_REQUEST_REOPENED),
                         },
                     }),
+                    Environment = new BuildEnvironment
+                    {
+                        BuildImage = LinuxBuildImage.AMAZON_LINUX_2,
+                        Privileged = true,
+                    },
                 });
         }
     }

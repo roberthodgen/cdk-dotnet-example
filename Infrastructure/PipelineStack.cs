@@ -142,7 +142,7 @@ namespace Infrastructure
                                 {
                                     ActionName = "CloudFormation",
                                     TemplatePath = cdkBuildOutput.AtPath("Api.template.json"),
-                                    StackName = "ApiStack",
+                                    StackName = "Api",
                                     AdminPermissions = true,
                                     ExtraInputs = new[]
                                     {

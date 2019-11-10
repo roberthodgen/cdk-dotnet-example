@@ -7,19 +7,15 @@ phases:
     commands:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
 
-  pre_build:
-    commands:
-      - export GIT_REV=`git rev-parse --short HEAD`
-
   build:
     commands:
       - echo Build started on `date`
       - echo Building Docker image...
       - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest .
-      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$GIT_REV
+      - docker tag $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$CODEBUILD_RESOLVED_SOURCE_VERSION
 
   post_build:
     commands:
       - echo Pushing Docker image to ECR...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:latest
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$GIT_REV
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/cdk-dotnet-example:build-$CODEBUILD_RESOLVED_SOURCE_VERSION

@@ -10,7 +10,6 @@ phases:
 
   pre_build:
     commands:
-      - export GIT_REV=`git rev-parse --short HEAD`
       - dotnet restore
       - dotnet test -c Release
 
@@ -21,6 +20,5 @@ phases:
       - cdk synth Api -o dist
 
 artifacts:
-  base-directory: dist
   files:
-    - Api.template.json
+    - dist/*

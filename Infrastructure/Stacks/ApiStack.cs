@@ -38,13 +38,21 @@ namespace Infrastructure.Stacks
                 "EcrRepository",
                 props.Repository.RepositoryName);
 
+            var imageTag = new CfnParameter(
+                this,
+                props.ApiImageTag,
+                new CfnParameterProps
+                {
+                    Default = "latest",
+                });
+
             var container = new ContainerDefinition(
                 this,
                 "ApiContainer",
                 new ContainerDefinitionProps
                 {
                     TaskDefinition = taskDef,
-                    Image = ContainerImage.FromEcrRepository(repo, props.ApiImageTag.ValueAsString),
+                    Image = ContainerImage.FromEcrRepository(repo, imageTag.ValueAsString),
                     Logging = logging,
                 });
 

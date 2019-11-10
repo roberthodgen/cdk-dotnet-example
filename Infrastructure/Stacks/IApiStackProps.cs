@@ -10,6 +10,6 @@ namespace Infrastructure.Stacks
 
         IRepository Repository { get; }
 
-        CfnParameter ApiImageTag { get; }
+        string ApiImageTag { get; }
     }
 }

@@ -12,9 +12,7 @@ namespace Infrastructure.Stacks
     {
         public IRepository Repository { get; }
 
-        public CfnParameter ApiImageTag { get; }
-
-        public PipelineStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
+        public PipelineStack(Construct parent, string id, IPipelineStackProps props) : base(parent, id, props)
         {
             Repository = new Repository(
                 this,
@@ -22,14 +20,6 @@ namespace Infrastructure.Stacks
                 new RepositoryProps
                 {
                     RepositoryName = "cdk-dotnet-example",
-                });
-
-            ApiImageTag = new CfnParameter(
-                this,
-                "ImageTag",
-                new CfnParameterProps
-                {
-                    Default = "latest",
                 });
 
             var cdkBuild = new PipelineProject(
@@ -158,7 +148,7 @@ namespace Infrastructure.Stacks
                                     AdminPermissions = true,
                                     ParameterOverrides = new Dictionary<string, object>
                                     {
-                                        [ApiImageTag.LogicalId] = apiBuildOutput.GetParam("metadata.json", "imageTag"),
+                                        [props.ApiImageTag] = apiBuildOutput.GetParam("metadata.json", "imageTag"),
                                     },
                                     ExtraInputs = new[]
                                     {

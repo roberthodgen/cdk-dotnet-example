@@ -2,13 +2,15 @@ namespace Infrastructure
 {
     using Amazon.CDK;
     using Amazon.CDK.AWS.EC2;
+    using Amazon.CDK.AWS.ECR;
     using Amazon.CDK.AWS.ECS;
     using Amazon.CDK.AWS.ECS.Patterns;
     using Amazon.CDK.AWS.ElasticLoadBalancingV2;
 
     public class ApiStack : Stack
     {
-        public ApiStack(Construct parent, string id, IStackProps props, IVpc vpc) : base(parent, id, props)
+        public ApiStack(Construct parent, string id, IStackProps props, IVpc vpc, IRepository ecr)
+            : base(parent, id, props)
         {
             var cluster = new Cluster(
                 this,
@@ -32,16 +34,28 @@ namespace Infrastructure
                     Cpu = 256,
                 });
 
-//            var image = ContainerImage.FromEcrRepository(ecr, "latest");
+            var imageTag = new CfnParameter(
+                this,
+                "ImageTag",
+                new CfnParameterProps
+                {
+                    Default = "latest",
+                });
 
-            var image = ContainerImage.FromRegistry("nginx:latest");
+            var repo = Repository.FromRepositoryName(
+                this,
+                "EcrRepository",
+                ecr.RepositoryName);
 
-            var container = new ContainerDefinition(this, "ApiContainer", new ContainerDefinitionProps
-            {
-                TaskDefinition = taskDef,
-                Image = image,
-                Logging = logging,
-            });
+            var container = new ContainerDefinition(
+                this,
+                "ApiContainer",
+                new ContainerDefinitionProps
+                {
+                    TaskDefinition = taskDef,
+                    Image = ContainerImage.FromEcrRepository(repo, imageTag.ValueAsString),
+                    Logging = logging,
+                });
 
             container.AddPortMappings(new PortMapping
             {

@@ -10,9 +10,11 @@ namespace Infrastructure
 
     public class PipelineStack : Stack
     {
+        public IRepository EcrRepository { get; }
+
         public PipelineStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
         {
-            var ecr = new Repository(
+            EcrRepository = new Repository(
                 this,
                 "EcrRepository",
                 new RepositoryProps
@@ -37,7 +39,7 @@ namespace Infrastructure
                 "ApiBuildRole",
                 new RoleProps
                 {
-                    ManagedPolicies = new []
+                    ManagedPolicies = new[]
                     {
                         ManagedPolicy.FromAwsManagedPolicyName("AmazonEC2ContainerRegistryPowerUser"),
                     },

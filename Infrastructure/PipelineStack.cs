@@ -5,6 +5,7 @@ namespace Infrastructure
     using Amazon.CDK.AWS.CodeBuild;
     using Amazon.CDK.AWS.CodePipeline;
     using Amazon.CDK.AWS.CodePipeline.Actions;
+    using Amazon.CDK.AWS.IAM;
 
     public class PipelineStack : Stack
     {
@@ -27,12 +28,25 @@ namespace Infrastructure
                     },
                 });
 
+            var apiBuildTaskRole = new Role(
+                this,
+                "ApiBuildRole",
+                new RoleProps
+                {
+                    ManagedPolicies = new []
+                    {
+                        ManagedPolicy.FromAwsManagedPolicyName("AmazonEC2ContainerRegistryPowerUser"),
+                    },
+                    AssumedBy = new ServicePrincipal("codebuild.amazonaws.com")
+                });
+
             var apiBuild = new PipelineProject(
                 this,
                 "ApiBuild",
                 new PipelineProjectProps
                 {
                     BuildSpec = BuildSpec.FromSourceFilename("Infrastructure/Resources/api_buildspec.yml"),
+                    Role = apiBuildTaskRole,
                     Environment = new BuildEnvironment
                     {
                         BuildImage = LinuxBuildImage.AMAZON_LINUX_2,

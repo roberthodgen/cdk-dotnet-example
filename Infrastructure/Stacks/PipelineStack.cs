@@ -8,6 +8,7 @@ namespace Infrastructure.Stacks
     using Amazon.CDK.AWS.ECR;
     using Amazon.CDK.AWS.IAM;
     using Props;
+    using Util;
 
     public class PipelineStack : Stack
     {
@@ -60,8 +61,8 @@ namespace Infrastructure.Stacks
                         Privileged = true,
                         EnvironmentVariables = new Dictionary<string, IBuildEnvironmentVariable>
                         {
-                            ["AWS_ACCOUNT_ID"] = BuildEnvironmentVariable(Of(this).Account),
-                            ["AWS_DEFAULT_REGION"] = BuildEnvironmentVariable(Of(this).Region),
+                            ["AWS_ACCOUNT_ID"] = CdkUtil.PlainTextBuildEnvironmentVariable(Of(this).Account),
+                            ["AWS_DEFAULT_REGION"] = CdkUtil.PlainTextBuildEnvironmentVariable(Of(this).Region),
                         },
                     },
                 });
@@ -160,15 +161,6 @@ namespace Infrastructure.Stacks
                         },
                     },
                 });
-        }
-
-        private static IBuildEnvironmentVariable BuildEnvironmentVariable(string value)
-        {
-            return new BuildEnvironmentVariable
-            {
-                Type = BuildEnvironmentVariableType.PLAINTEXT,
-                Value = value,
-            };
         }
     }
 }

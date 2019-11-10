@@ -6,6 +6,7 @@ namespace Infrastructure.Stacks
     using Amazon.CDK.AWS.ECS;
     using Amazon.CDK.AWS.ECS.Patterns;
     using Amazon.CDK.AWS.ElasticLoadBalancingV2;
+    using Props;
 
     public class ApiStack : Stack
     {

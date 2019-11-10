@@ -1,4 +1,4 @@
-namespace Infrastructure.Stacks
+namespace Infrastructure.Stacks.Props
 {
     using Amazon.CDK;
     using Amazon.CDK.AWS.EC2;

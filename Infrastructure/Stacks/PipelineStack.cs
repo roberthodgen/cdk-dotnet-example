@@ -7,14 +7,15 @@ namespace Infrastructure.Stacks
     using Amazon.CDK.AWS.CodePipeline.Actions;
     using Amazon.CDK.AWS.ECR;
     using Amazon.CDK.AWS.IAM;
+    using Props;
 
     public class PipelineStack : Stack
     {
-        public IRepository Repository { get; }
+        public IRepository EcrRepository { get; }
 
         public PipelineStack(Construct parent, string id, IPipelineStackProps props) : base(parent, id, props)
         {
-            Repository = new Repository(
+            EcrRepository = new Repository(
                 this,
                 "EcrRepository",
                 new RepositoryProps
@@ -97,7 +98,7 @@ namespace Infrastructure.Stacks
                                 new GitHubSourceAction(new GitHubSourceActionProps
                                 {
                                     ActionName = "GitHub",
-                                    OauthToken = SecretValue.SecretsManager("github.com/roberthodgen"),
+                                    OauthToken = SecretValue.SecretsManager(props.GitHubSecretName),
                                     Repo = "cdk-dotnet-example",
                                     Owner = "roberthodgen",
                                     Output = sourceOutput,

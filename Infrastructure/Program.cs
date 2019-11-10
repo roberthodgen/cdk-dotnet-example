@@ -2,6 +2,7 @@
 {
     using Amazon.CDK;
     using Stacks;
+    using Stacks.Props;
 
     internal static class Program
     {
@@ -14,13 +15,14 @@
 
             var pipelineStack = new PipelineStack(app, "Pipeline", new PipelineStackProps
             {
+                GitHubSecretName = "github.com/roberthodgen",
                 ApiImageTag = apiImageTag,
             });
 
             new ApiStack(app, "Api", new ApiStackProps
             {
                 Vpc = networkStack.Vpc,
-                Repository = pipelineStack.Repository,
+                Repository = pipelineStack.EcrRepository,
                 ApiImageTag = apiImageTag,
             });
 

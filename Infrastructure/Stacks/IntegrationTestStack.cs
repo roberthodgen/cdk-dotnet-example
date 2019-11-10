@@ -1,4 +1,4 @@
-namespace Infrastructure
+namespace Infrastructure.Stacks
 {
     using Amazon.CDK;
 

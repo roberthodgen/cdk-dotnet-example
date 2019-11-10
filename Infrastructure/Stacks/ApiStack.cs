@@ -1,4 +1,4 @@
-namespace Infrastructure
+namespace Infrastructure.Stacks
 {
     using Amazon.CDK;
     using Amazon.CDK.AWS.EC2;
@@ -9,15 +9,14 @@ namespace Infrastructure
 
     public class ApiStack : Stack
     {
-        public ApiStack(Construct parent, string id, IStackProps props, IVpc vpc, IRepository ecr)
-            : base(parent, id, props)
+        public ApiStack(Construct parent, string id, IApiStackProps props) : base(parent, id, props)
         {
             var cluster = new Cluster(
                 this,
                 "Example",
                 new ClusterProps
                 {
-                    Vpc = vpc,
+                    Vpc = props.Vpc,
                 });
 
             var logging = new AwsLogDriver(new AwsLogDriverProps
@@ -45,7 +44,7 @@ namespace Infrastructure
             var repo = Repository.FromRepositoryName(
                 this,
                 "EcrRepository",
-                ecr.RepositoryName);
+                props.Repository.RepositoryName);
 
             var container = new ContainerDefinition(
                 this,
@@ -69,14 +68,14 @@ namespace Infrastructure
                 "LoadBalancer",
                 new ApplicationLoadBalancerProps
                 {
-                    Vpc = vpc,
+                    Vpc = props.Vpc,
                     Http2Enabled = false,
                     IdleTimeout = Duration.Seconds(5),
                     InternetFacing = true,
                     IpAddressType = IpAddressType.IPV4,
                     VpcSubnets = new SubnetSelection
                     {
-                        Subnets = vpc.PublicSubnets,
+                        Subnets = props.Vpc.PublicSubnets,
                     },
                 });
 

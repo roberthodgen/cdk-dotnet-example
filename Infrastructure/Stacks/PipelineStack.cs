@@ -1,4 +1,4 @@
-namespace Infrastructure
+namespace Infrastructure.Stacks
 {
     using System.Collections.Generic;
     using Amazon.CDK;
@@ -10,11 +10,11 @@ namespace Infrastructure
 
     public class PipelineStack : Stack
     {
-        public IRepository EcrRepository { get; }
+        public IRepository Repository { get; }
 
         public PipelineStack(Construct parent, string id, IStackProps props) : base(parent, id, props)
         {
-            EcrRepository = new Repository(
+            Repository = new Repository(
                 this,
                 "EcrRepository",
                 new RepositoryProps
@@ -146,6 +146,10 @@ namespace Infrastructure
                                     TemplatePath = cdkBuildOutput.AtPath("Api.template.json"),
                                     StackName = "Api",
                                     AdminPermissions = true,
+                                    ParameterOverrides = new Dictionary<string, object>
+                                    {
+                                        [""] = "",
+                                    },
                                     ExtraInputs = new[]
                                     {
                                         apiBuildOutput,

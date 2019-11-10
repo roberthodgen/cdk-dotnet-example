@@ -2,7 +2,6 @@ namespace Infrastructure
 {
     using Amazon.CDK;
     using Amazon.CDK.AWS.EC2;
-    using Amazon.CDK.AWS.ECR;
     using Amazon.CDK.AWS.ECS;
     using Amazon.CDK.AWS.ECS.Patterns;
     using Amazon.CDK.AWS.ElasticLoadBalancingV2;
@@ -82,9 +81,9 @@ namespace Infrastructure
             PrintLoadBalancerDnsName(ecsService);
         }
 
-        private void PrintLoadBalancerDnsName(ApplicationLoadBalancedServiceBase ecsService)
+        private CfnOutput PrintLoadBalancerDnsName(ApplicationLoadBalancedServiceBase ecsService)
         {
-            new CfnOutput(
+            return new CfnOutput(
                 this,
                 "LoadBalancerDnsName",
                 new CfnOutputProps

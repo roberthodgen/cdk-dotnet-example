@@ -4,7 +4,7 @@ phases:
   install:
     runtime-versions:
       dotnet: 2.2
-      node: 10
+      nodejs: 10
     commands:
       - npm i -g aws-cdk
 

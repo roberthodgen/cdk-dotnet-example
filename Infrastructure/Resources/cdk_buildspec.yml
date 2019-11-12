@@ -17,7 +17,7 @@ phases:
     commands:
       - echo Build started on `date`
       - dotnet build -c Release
-      - cdk synth Api -o dist
+      - cdk synth -o dist
 
 artifacts:
   base-directory: dist

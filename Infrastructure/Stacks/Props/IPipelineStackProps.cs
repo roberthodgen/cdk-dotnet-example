@@ -7,5 +7,11 @@ namespace Infrastructure.Stacks.Props
         string GitHubSecretName { get; }
 
         string ApiImageTag { get; }
+
+        string ApiStackName { get; }
+
+        string GitHubRepo { get; }
+
+        string GitHubOwner { get; }
     }
 }

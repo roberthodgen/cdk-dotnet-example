@@ -22,6 +22,7 @@ namespace Infrastructure.Stacks
                 new RepositoryProps
                 {
                     RepositoryName = "cdk-dotnet-example",
+                    RemovalPolicy = RemovalPolicy.DESTROY,
                 });
 
             var cdkBuild = new PipelineProject(
@@ -86,7 +87,7 @@ namespace Infrastructure.Stacks
 
             new Pipeline(
                 this,
-                "Example",
+                "Api",
                 new PipelineProps
                 {
                     Stages = new IStageProps[]
@@ -100,8 +101,8 @@ namespace Infrastructure.Stacks
                                 {
                                     ActionName = "GitHub",
                                     OauthToken = SecretValue.SecretsManager(props.GitHubSecretName),
-                                    Repo = "cdk-dotnet-example",
-                                    Owner = "roberthodgen",
+                                    Repo = props.GitHubRepo,
+                                    Owner = props.GitHubOwner,
                                     Output = sourceOutput,
                                     Trigger = GitHubTrigger.WEBHOOK,
                                 }),
@@ -145,7 +146,7 @@ namespace Infrastructure.Stacks
                                 new CloudFormationCreateUpdateStackAction(new CloudFormationCreateUpdateStackActionProps
                                 {
                                     ActionName = "ApiStack",
-                                    TemplatePath = cdkBuildOutput.AtPath("Api.template.json"),
+                                    TemplatePath = cdkBuildOutput.AtPath($"{props.ApiStackName}.template.json"),
                                     StackName = "Api",
                                     AdminPermissions = true,
                                     ParameterOverrides = new Dictionary<string, object>
